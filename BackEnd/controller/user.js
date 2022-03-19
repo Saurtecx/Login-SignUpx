@@ -4,6 +4,12 @@ const b = require('bcrypt')
 exports.signup = async (req, res) => {
     const p = await b.hash(req.body.password, 10)
     console.log(p)
+    email = req.body.email
+    User.findOne({email:email},(err,user)=>{
+        if(user){
+            res.send({message:"user already exist"})
+        }
+        else{
     const signupUser = new signupTemplateCopy({
         fullname: req.body.fullname,
         username: req.body.username,
@@ -17,6 +23,8 @@ exports.signup = async (req, res) => {
         .catch(err => {
             res.json(err)
         })
+    }
+ })
 
 }
 
